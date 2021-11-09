@@ -38,4 +38,87 @@ then go to https://www.dcode.fr/whitespace-language   and decrypt here
 
 and got the flag :)
 
+2. Hybrid tree 
+
+![image](https://user-images.githubusercontent.com/69809386/140959787-b159e305-e9de-41bd-97c0-92676622278a.png)
+
+solution 
+
+it was easy just 
+```
+root@kali:~/Desktop/ehcon_ctf/forensic# strings -n 10 hybrid.jpg 
+((((((((((((((((((((((((((((((((((((((((((((((((((
+ErVyaNLfN@}
+jT'     :rU;Eg
+EHACON{z1p_plu5_1m463}
+```
+got it 
+
+### 2. MISCELLANEOUS
+
+1. PikaZip
+
+![image](https://user-images.githubusercontent.com/69809386/140960620-bc24e845-5521-46ed-aa79-7292624ac7dc.png)
+
+Solution 
+
+so here we got Zip file Rar file and Tar.gz file and its was zip under zip file means multiple zip file 
+
+so written a code 
+```
+import os
+run = os.system
+
+for i in range(1000):
+    #run('ls')
+    run('mkdir zipfile_%s' % i)
+    run('unzip magic.zip -d zipfile_%s' % i)
+    os.chdir('zipfile_%s' % i)
+    print('directory changed to zipfile_%s' % i)
+    #run('cd zipfile_%s' % i)
+    run('unrar e magic.rar')
+    run('tar -xf magic.tar.gz')
+```
+this was written by me and it was a computer hanging code but i got the flag with this code 😥 
+
+and many random directory that i have created 
+
+but dont use above code my teammate then written simple code and here it is
+```
+import patoolib
+import os
+
+for i in range(1000):
+    file = os.listdir("out")[-1]
+    if file == "flag.txt":
+        break
+    patoolib.extract_archive(f"out/{file}", outdir="out")
+    os.remove(f"out/{file}")
+```
+and my other teammate wrote code in bash
+```
+for VARIABLE in {1..70}
+do
+    unrar e magic.rar
+    rm magic.zip
+    tar -zxvf magic.tar.gz
+    rm magic.rar
+    unzip magic.zip
+    rm magic.tar.gz
+done
+cat flag.txt
+```
+and then we will get flag.txt file
+
+and when we open it its language of pikachu (very interesting language for pokemon fan hahahaha)
+
+and searched on google will find Pikalang cipher decoder
+
+![image](https://user-images.githubusercontent.com/69809386/140962990-93c5aaa1-341b-4b4d-9f42-897429cc51dc.png)
+
+and got the flag 
+
+
+
+
 
